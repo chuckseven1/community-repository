@@ -9818,6 +9818,26 @@ packages:
     build_requires:
       - <<: *layers-sys-fs
 
+  - category: "apps"
+    name: "opentofu"
+    version: "1.10.6"
+    uri:
+      - https://www.opentofu.org/
+    license: "Apache-2.0 BSD BSD-2 MPL-2.0 MIT ISC"
+    description: "The open source infrastructure as code tool"
+    labels:
+      emerge.jobs: "1"
+      emerge.packages: >-
+        app-admin/opentofu
+    provides:
+      - category: "app-admin"
+        name: "opentofu"
+        version: ">=0"
+    requires:
+      - <<: *layers-system-x
+    build_requires:
+      - <<: *layers-system-x
+
   - &apps-pandoc
     category: "apps"
     name: "pandoc-cli"
