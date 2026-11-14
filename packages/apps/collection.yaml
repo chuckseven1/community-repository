@@ -4375,7 +4375,7 @@ packages:
 
   - category: "apps"
     name: "1password"
-    version: "8.12.44"
+    version: "8.12.44+1"
     uri:
       - https://1password.com
     license: "all-rights-reserved"
@@ -4389,6 +4389,8 @@ packages:
       # Overlay recommended by 1password site
       # https://support.1password.com/install-linux/#gentoo-or-nixos
       - enable: "jaredallard"
+      # for acct-group/onepassword-mcp
+      - enable: "gentoo-zh"
     provides:
       - category: "app-admin"
         name: "1password"
@@ -4403,12 +4405,22 @@ packages:
       - atom: "app-admin/op-cli-bin"
         license: "all-rights-reserved"
         accept_keywords: "~amd64"
+    env:
+      - POLICY_OWNERS=unix-group:users
     inner_build_reqs:
+      - acct-group/users
       - acct-group/onepassword
       - acct-group/onepassword-cli
       - acct-group/onepassword-mcp
+    completion:
+      - sed -i 's/^PLATFORM="tar"$/PLATFORM="emerge"/' /opt/1Password/after-install.sh
+      - sh /opt/1Password/after-install.sh
+      - echo "$(cat /opt/1Password/com.1password.1Password.policy.tpl)" > /opt/1Password/com.1password.1Password.policy
     requires:
       - <<: *layers-X
+      - category: "entity"
+        name: "users"
+        version: ">=0"
       - category: "entity"
         name: "onepassword"
         version: ">=0"
